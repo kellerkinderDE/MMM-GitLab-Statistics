@@ -1,0 +1,21 @@
+{
+  "name": "MMM-GitLab-Statistics",
+  "version": "1.0.0",
+  "description": "Display GitLab statistics",
+  "main": "MMM-GitLab-Statistics.js",
+  "author": "Kellerkinder GmbH",
+  "license": "MIT",
+  "scripts": {
+    "test": "./node_modules/grunt/bin/grunt"
+  },
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-eslint": "latest",
+    "grunt-jsonlint": "latest",
+    "grunt-markdownlint": "^1.0.13",
+    "grunt-stylelint": "latest",
+    "grunt-yamllint": "latest",
+    "stylelint-config-standard": "latest",
+    "time-grunt": "latest"
+  }
+}
