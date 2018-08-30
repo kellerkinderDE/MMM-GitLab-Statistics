@@ -78,6 +78,8 @@ Module.register("MMM-GitLab-Statistics", {
                 }
             };
 
+            dataRequest.send();
+
             result.push(currentProject);
             currentProject = jsonResponse[++i];
         }
