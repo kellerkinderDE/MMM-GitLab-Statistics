@@ -23,11 +23,21 @@ Module.register("MMM-GitLab-Statistics", {
      *
      */
     getData: function() {
-        var self = this;
+        var self = this,
+            params = {
+                statistics: true,
+                private_token: self.config.token,
+                per_page: 100,
+                order_by: 'last_activity_at',
+            },
+            query = Object.keys(params)
+                .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+                .join('&'),
+            dataRequest = new XMLHttpRequest();
 
-        var dataRequest = new XMLHttpRequest();
-        dataRequest.open("GET", self.config.url + "/projects?statistics=true&private_token=" + self.config.token, true);
+        dataRequest.open("GET", self.config.url + query, true);
         dataRequest.onreadystatechange = function() {
+            console.log(this);
             self.response = this.response;
         };
         dataRequest.send();
