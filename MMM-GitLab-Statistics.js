@@ -43,6 +43,7 @@ Module.register("MMM-GitLab-Statistics", {
 
             if (this.status === 200) {
                 self.response = JSON.parse(this.response);
+                self.updateDom();
             }
         };
         dataRequest.send();
