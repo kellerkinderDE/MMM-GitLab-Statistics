@@ -6,17 +6,10 @@ Module.register("MMM-GitLab-Statistics", {
 
     requiresVersion: "2.1.0", // Required version of MagicMirror
 
-    init: function() {
-        Log.info("Haaaaaalllllllooooooooo");
-        console.log("Foo Init");
-    },
-
     start: function() {
         var self = this;
 
         console.log("Start GitLab Statistics");
-
-        Log.info("Starting");
 
         self.response = null;
 
@@ -32,10 +25,8 @@ Module.register("MMM-GitLab-Statistics", {
     getData: function() {
         var self = this;
 
-        Log.info(self.config);
-
         var dataRequest = new XMLHttpRequest();
-        dataRequest.open("GET", self.config.url, true);
+        dataRequest.open("GET", self.config.url + "/projects?statistics=true&private_token=" + self.config.token, true);
         dataRequest.onreadystatechange = function() {
             self.response = this.response;
         };
