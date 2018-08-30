@@ -24,9 +24,9 @@ Module.register("MMM-GitLab-Statistics", {
         var dataRequest = new XMLHttpRequest();
         dataRequest.open("GET", self.config.url, true);
         dataRequest.onreadystatechange = function() {
-            console.log(this.readyState);
-            console.log(this.status);
-            console.log(this.response);
+            Log.info(this.readyState);
+            Log.info(this.status);
+            Log.info(this.response);
         };
         dataRequest.send();
     },
