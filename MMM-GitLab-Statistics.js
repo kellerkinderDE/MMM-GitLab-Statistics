@@ -9,6 +9,8 @@ Module.register("MMM-GitLab-Statistics", {
     start: function() {
         var self = this;
 
+        Log.info("Starting");
+
         self.response = null;
 
         self.getData();
@@ -22,6 +24,8 @@ Module.register("MMM-GitLab-Statistics", {
      */
     getData: function() {
         var self = this;
+
+        Log.info(self.config);
 
         var dataRequest = new XMLHttpRequest();
         dataRequest.open("GET", self.config.url, true);
