@@ -9,6 +9,8 @@ Module.register("MMM-GitLab-Statistics", {
     start: function() {
         var self = this;
 
+        self.response = null;
+
         self.getData();
     },
 
@@ -24,11 +26,25 @@ Module.register("MMM-GitLab-Statistics", {
         var dataRequest = new XMLHttpRequest();
         dataRequest.open("GET", self.config.url, true);
         dataRequest.onreadystatechange = function() {
-            Log.info(this.readyState);
-            Log.info(this.status);
-            Log.info(this.response);
+            self.response = this.response;
         };
         dataRequest.send();
+    },
+
+    getDom: function(){
+        var self = this;
+
+        var wrapper = document.createElement("div"),
+            response = document.createElement("div"),
+            demo = document.createElement("div");
+
+        response.innerHTML = self.response;
+        demo.innerHTML = 'Hallo!';
+
+        wrapper.append(demo);
+        wrapper.append(response);
+
+        return wrapper;
     },
 
 });
