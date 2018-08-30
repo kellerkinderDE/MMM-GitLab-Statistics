@@ -27,7 +27,7 @@ Module.register("MMM-GitLab-Statistics", {
             params = {
                 statistics: true,
                 private_token: self.config.token,
-                per_page: 5,
+                per_page: 100,
                 order_by: 'last_activity_at',
             },
             query = Object.keys(params)
@@ -42,14 +42,39 @@ Module.register("MMM-GitLab-Statistics", {
             }
 
             if (this.status === 200) {
-                self.response = JSON.parse(this.response);
+                self.processResponse(this.response);
                 self.updateDom();
             }
         };
         dataRequest.send();
     },
 
+    processResponse: function(response) {
+        var self = this,
+            json = JSON.parse(response),
+            today = new Date().setHours(0,0,0,0),
+            result = [],
+            i = 0,
+            currentProject = response[i];
+
+        while (Date.parse(currentProject.latest_activity_at) > today) {
+            result.push(currentProject);
+            currentProject = response[++i];
+        }
+
+        console.log(result);
+    },
+
     getDom: function(){
+        var self = this,
+            wrapper = document.createElement("div");
+
+        wrapper.append(self.getLatestActivityDom());
+
+        return wrapper;
+    },
+
+    getLatestActivityDom: function() {
         var self = this,
             wrapper = document.createElement("div");
 
