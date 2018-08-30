@@ -59,11 +59,11 @@ Module.register("MMM-GitLab-Statistics", {
 
         console.log(response);
         console.log(currentProject);
-        console.log(Date.parse(currentProject.latest_activity_at));
+        console.log(Date.parse(currentProject.last_activity_at));
         console.log(today);
-        console.log(Date.parse(currentProject.latest_activity_at) > today);
+        console.log(Date.parse(currentProject.last_activity_at) > today);
 
-        while (Date.parse(currentProject.latest_activity_at) > today) {
+        while (Date.parse(currentProject.last_activity_at) > today) {
             result.push(currentProject);
             currentProject = jsonResponse[++i];
         }
