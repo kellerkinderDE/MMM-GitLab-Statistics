@@ -55,6 +55,8 @@ Module.register("MMM-GitLab-Statistics", {
             response = document.createElement("div"),
             demo = document.createElement("div");
 
+        console.log(self.response);
+
         response.innerHTML = self.response;
         demo.innerHTML = 'Hallo!';
 
