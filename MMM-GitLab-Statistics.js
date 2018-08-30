@@ -37,8 +37,13 @@ Module.register("MMM-GitLab-Statistics", {
 
         dataRequest.open("GET", self.config.url + "/projects?" + query, true);
         dataRequest.onreadystatechange = function() {
-            console.log(this);
-            self.response = this.response;
+            if (this.readyState !== 4) {
+                return;
+            }
+
+            if (this.status === 200) {
+                self.response = JSON.parse(this.response);
+            }
         };
         dataRequest.send();
     },
