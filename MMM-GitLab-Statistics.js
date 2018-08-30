@@ -27,7 +27,7 @@ Module.register("MMM-GitLab-Statistics", {
             params = {
                 statistics: true,
                 private_token: self.config.token,
-                per_page: 100,
+                per_page: 5,
                 order_by: 'last_activity_at',
             },
             query = Object.keys(params)
@@ -50,19 +50,20 @@ Module.register("MMM-GitLab-Statistics", {
     },
 
     getDom: function(){
-        var self = this;
+        var self = this,
+            wrapper = document.createElement("div");
 
-        var wrapper = document.createElement("div"),
-            response = document.createElement("div"),
-            demo = document.createElement("div");
+        if (self.response === null) {
+            return wrapper;
+        }
 
-        console.log(self.response);
+        wrapper.innerHTML = "<h1>Latest activities</h1><ul>";
 
-        response.innerHTML = self.response;
-        demo.innerHTML = 'Hallo!';
+        self.response.forEach(function(project) {
+            wrapper.innerHTML += "<li>" + project.path_with_namespace + "</li>";
+        });
 
-        wrapper.append(demo);
-        wrapper.append(response);
+        wrapper.innerHTML += "</ul>";
 
         return wrapper;
     },
