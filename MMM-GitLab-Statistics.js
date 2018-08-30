@@ -51,15 +51,21 @@ Module.register("MMM-GitLab-Statistics", {
 
     processResponse: function(response) {
         var self = this,
-            json = JSON.parse(response),
+            jsonResponse = JSON.parse(response),
             today = new Date().setHours(0,0,0,0),
             result = [],
             i = 0,
-            currentProject = response[i];
+            currentProject = jsonResponse[i];
+
+        console.log(response);
+        console.log(currentProject);
+        console.log(Date.parse(currentProject.latest_activity_at));
+        console.log(today);
+        console.log(Date.parse(currentProject.latest_activity_at) > today);
 
         while (Date.parse(currentProject.latest_activity_at) > today) {
             result.push(currentProject);
-            currentProject = response[++i];
+            currentProject = jsonResponse[++i];
         }
 
         console.log(result);
