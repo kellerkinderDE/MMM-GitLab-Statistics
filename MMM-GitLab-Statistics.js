@@ -11,7 +11,7 @@ Module.register("MMM-GitLab-Statistics", {
 
         console.log("Start GitLab Statistics");
 
-        self.response = null;
+        self.latestActivity = null;
 
         self.getData();
     },
@@ -55,20 +55,35 @@ Module.register("MMM-GitLab-Statistics", {
             today = new Date().setHours(0,0,0,0),
             result = [],
             i = 0,
-            currentProject = jsonResponse[i];
-
-        console.log(response);
-        console.log(currentProject);
-        console.log(Date.parse(currentProject.last_activity_at));
-        console.log(today);
-        console.log(Date.parse(currentProject.last_activity_at) > today);
+            currentProject = jsonResponse[i],
+            params = {
+                since: new Date(today).toISOString(),
+                with_stats: true,
+            },
+            query = Object.keys(params)
+                .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+                .join('&');
 
         while (Date.parse(currentProject.last_activity_at) > today) {
+            dataRequest.open("GET", self.config.url + "/projects/" + currentProject.id + "/repository/commits" + query, true);
+            dataRequest.onreadystatechange = function() {
+                if (this.readyState !== 4) {
+                    return;
+                }
+
+                if (this.status === 200) {
+                    console.log(currentProject);
+                    currentProject.commits = JSON.parse(this.response);
+                }
+            };
+
             result.push(currentProject);
             currentProject = jsonResponse[++i];
         }
 
         console.log(result);
+
+        self.latestActivity = result;
     },
 
     getDom: function(){
@@ -84,7 +99,7 @@ Module.register("MMM-GitLab-Statistics", {
         var self = this,
             wrapper = document.createElement("div");
 
-        if (self.response === null) {
+        if (self.latestActivity === null) {
             return wrapper;
         }
 
