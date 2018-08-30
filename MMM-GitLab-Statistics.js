@@ -6,8 +6,15 @@ Module.register("MMM-GitLab-Statistics", {
 
     requiresVersion: "2.1.0", // Required version of MagicMirror
 
+    init: function() {
+        Log.info("Haaaaaalllllllooooooooo");
+        console.log("Foo Init");
+    },
+
     start: function() {
         var self = this;
+
+        console.log("Start GitLab Statistics");
 
         Log.info("Starting");
 
