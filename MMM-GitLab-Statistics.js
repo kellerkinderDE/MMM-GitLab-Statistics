@@ -62,7 +62,8 @@ Module.register("MMM-GitLab-Statistics", {
             },
             query = Object.keys(params)
                 .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-                .join('&');
+                .join('&'),
+            dataRequest = new XMLHttpRequest();
 
         while (Date.parse(currentProject.last_activity_at) > today) {
             dataRequest.open("GET", self.config.url + "/projects/" + currentProject.id + "/repository/commits" + query, true);
