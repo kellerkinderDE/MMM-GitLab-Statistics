@@ -62,11 +62,12 @@ Module.register("MMM-GitLab-Statistics", {
             },
             query = Object.keys(params)
                 .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-                .join('&'),
-            dataRequest = new XMLHttpRequest();
+                .join('&');
 
         while (Date.parse(currentProject.last_activity_at) > today) {
-            dataRequest.open("GET", self.config.url + "/projects/" + currentProject.id + "/repository/commits" + query, true);
+            var dataRequest = new XMLHttpRequest();
+
+            dataRequest.open("GET", self.config.url + "/projects/" + currentProject.id + "/repository/commits?" + query, true);
             dataRequest.onreadystatechange = function() {
                 if (this.readyState !== 4) {
                     return;
