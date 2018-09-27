@@ -14,6 +14,12 @@ Module.register("MMM-GitLab-Statistics", {
         };
     },
 
+    getStyles: function() {
+        return [
+            'style.css'
+        ];
+    },
+
     start: function() {
         var self = this;
 
