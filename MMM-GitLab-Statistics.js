@@ -58,6 +58,7 @@ Module.register("MMM-GitLab-Statistics", {
             currentProject = jsonResponse[i],
             params = {
                 since: new Date(today).toISOString(),
+                private_token: self.config.token,
                 with_stats: true,
             },
             query = Object.keys(params)
