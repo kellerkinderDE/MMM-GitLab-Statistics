@@ -79,6 +79,7 @@ Module.register("MMM-GitLab-Statistics", {
                     if (this.status === 200) {
                         console.log(self.latestActivity[index]);
                         self.latestActivity[index].commits = JSON.parse(this.response);
+                        self.updateDom();
                     }
                 }
             })(i);
@@ -105,7 +106,8 @@ Module.register("MMM-GitLab-Statistics", {
 
     getLatestActivityDom: function() {
         var self = this,
-            wrapper = document.createElement("div");
+            wrapper = document.createElement("div"),
+            commitStats, commitString;
 
         if (self.latestActivity === null) {
             return wrapper;
@@ -114,7 +116,10 @@ Module.register("MMM-GitLab-Statistics", {
         wrapper.innerHTML = "<h1>Latest activities</h1><ul>";
 
         self.latestActivity.forEach(function(project) {
-            wrapper.innerHTML += "<li>" + project.path_with_namespace + "</li>";
+            commitStats = self.getCommitAdditionsAndDeletions(project);
+            commitString = ` (+${commitStats.additions} -${commitStats.deletions})`;
+
+            wrapper.innerHTML += "<li>" + project.path_with_namespace + commitString + "</li>";
         });
 
         wrapper.innerHTML += "</ul>";
@@ -122,4 +127,22 @@ Module.register("MMM-GitLab-Statistics", {
         return wrapper;
     },
 
+    getCommitAdditionsAndDeletions: function(project) {
+        var self = this,
+            result = {
+                additions: 0,
+                deletions: 0
+            };
+
+        if (!project.commits) {
+            return result;
+        }
+
+        project.commits.forEach(function(commit) {
+            result.additions += commit.stats.additions;
+            result.deletions += commit.stats.deletions;
+        });
+
+        return result;
+    },
 });
