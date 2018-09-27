@@ -60,6 +60,7 @@ Module.register("MMM-GitLab-Statistics", {
                 since: new Date(today).toISOString(),
                 private_token: self.config.token,
                 with_stats: true,
+                all: true
             },
             query = Object.keys(params)
                 .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
@@ -69,16 +70,18 @@ Module.register("MMM-GitLab-Statistics", {
             var dataRequest = new XMLHttpRequest();
 
             dataRequest.open("GET", self.config.url + "/projects/" + currentProject.id + "/repository/commits?" + query, true);
-            dataRequest.onreadystatechange = function() {
-                if (this.readyState !== 4) {
-                    return;
-                }
+            dataRequest.onreadystatechange = (function(index) {
+                return function() {
+                    if (this.readyState !== 4) {
+                        return;
+                    }
 
-                if (this.status === 200) {
-                    console.log(currentProject);
-                    currentProject.commits = JSON.parse(this.response);
+                    if (this.status === 200) {
+                        console.log(self.latestActivity[index]);
+                        self.latestActivity[index].commits = JSON.parse(this.response);
+                    }
                 }
-            };
+            })(i);
 
             dataRequest.send();
 
