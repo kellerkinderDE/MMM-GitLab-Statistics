@@ -120,22 +120,28 @@ Module.register("MMM-GitLab-Statistics", {
     getLatestActivityDom: function() {
         var self = this,
             wrapper = document.createElement("div"),
-            commitStats, commitString;
+            list = document.createElement("ul"),
+            commitStats, commitString, listItem;
 
         if (self.latestActivity === null) {
             return wrapper;
         }
 
-        wrapper.innerHTML = "<h1>" + this.translate('title') + "</h1><ul>";
+        list.className = 'latest-activity';
+
+        wrapper.innerHTML = "<h1>" + this.translate('title') + "</h1>";
 
         self.latestActivity.forEach(function(project) {
             commitStats = self.getCommitAdditionsAndDeletions(project);
             commitString = ` (+${commitStats.additions} -${commitStats.deletions})`;
 
-            wrapper.innerHTML += "<li>" + project.path_with_namespace + commitString + "</li>";
+            listItem = document.createElement("li");
+            listItem.textContent = project.path_with_namespace + commitString;
+
+            list.appendChild(listItem);
         });
 
-        wrapper.innerHTML += "</ul>";
+        wrapper.appendChild(list);
 
         return wrapper;
     },
