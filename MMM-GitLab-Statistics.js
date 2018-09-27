@@ -1,7 +1,8 @@
 Module.register("MMM-GitLab-Statistics", {
     defaults: {
         url: "",
-        token: ""
+        token: "",
+        intervalTime: 10 * 60 * 1000
     },
 
     requiresVersion: "2.1.0", // Required version of MagicMirror
@@ -14,6 +15,11 @@ Module.register("MMM-GitLab-Statistics", {
         self.latestActivity = null;
 
         self.getData();
+
+        // Update every 10 minutes
+        setInterval(function() {
+            self.getData();
+        }, self.config.intervalTime);
     },
 
     /*
