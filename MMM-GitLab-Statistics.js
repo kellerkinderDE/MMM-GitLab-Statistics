@@ -135,7 +135,7 @@ Module.register("MMM-GitLab-Statistics", {
 
         list.className = 'latest-activity';
 
-        wrapper.innerHTML = "<h1>" + this.translate('title') + "</h1>";
+        wrapper.innerHTML = "<p class='bright'>" + this.translate('title') + "</p>";
 
         self.latestActivity.forEach(function(project) {
             commitStats = self.getCommitAdditionsAndDeletions(project);
