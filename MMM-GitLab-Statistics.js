@@ -110,7 +110,7 @@ Module.register("MMM-GitLab-Statistics", {
 
         wrapper.innerHTML = "<h1>Latest activities</h1><ul>";
 
-        self.response.forEach(function(project) {
+        self.latestActivity.forEach(function(project) {
             wrapper.innerHTML += "<li>" + project.path_with_namespace + "</li>";
         });
 
