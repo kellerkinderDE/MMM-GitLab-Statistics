@@ -7,6 +7,13 @@ Module.register("MMM-GitLab-Statistics", {
 
     requiresVersion: "2.1.0", // Required version of MagicMirror
 
+    getTranslations: function() {
+        return {
+            en: "translations/en.json",
+            de: "translations/de.json"
+        };
+    },
+
     start: function() {
         var self = this;
 
@@ -119,7 +126,7 @@ Module.register("MMM-GitLab-Statistics", {
             return wrapper;
         }
 
-        wrapper.innerHTML = "<h1>Latest activities</h1><ul>";
+        wrapper.innerHTML = "<h1>" + this.translate('title') + "</h1><ul>";
 
         self.latestActivity.forEach(function(project) {
             commitStats = self.getCommitAdditionsAndDeletions(project);
